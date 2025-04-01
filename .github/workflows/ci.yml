@@ -1,14 +1,12 @@
-# .github/workflows/ci.yml
 name: CI
 
 on:
   push:
     branches: [main, development]
-  pull_request:
-    branches: [main, development]
 
 jobs:
   build-and-test:
+    name: 🧪 Lint, Test & Build
     runs-on: ubuntu-latest
 
     steps:
@@ -31,3 +29,4 @@ jobs:
         run: npm test
 
       - name: 🛠️ Build project
+        run: npm run build
