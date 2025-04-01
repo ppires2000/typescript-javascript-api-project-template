@@ -1,3 +1,5 @@
+// .eslintrc.js
+
 module.exports = {
   env: {
     node: true,
@@ -14,12 +16,18 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
+    'plugin:prettier/recommended', // enables eslint-config-prettier + displays Prettier errors as ESLint errors
   ],
   rules: {
+    // Prettier integration
     'prettier/prettier': ['error'],
+
+    // TypeScript-specific
     '@typescript-eslint/no-explicit-any': 'warn',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
-    'no-console': 'warn',
+    '@typescript-eslint/no-unused-expressions': 'error',
+
+    // Console logging – allowed in dev, warning in prod
+    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
   },
-}
+};

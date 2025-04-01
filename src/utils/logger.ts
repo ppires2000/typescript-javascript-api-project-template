@@ -1,11 +1,9 @@
-// src/utils/logger.ts
 import chalk from 'chalk';
 import winston from 'winston';
 import DailyRotateFile from 'winston-daily-rotate-file';
 import path from 'path';
 import fs from 'fs';
 
-// Create logs directory if not exists
 const logDir = path.join(__dirname, '../../logs');
 if (!fs.existsSync(logDir)) {
   fs.mkdirSync(logDir);
@@ -13,14 +11,13 @@ if (!fs.existsSync(logDir)) {
 
 const isDev = process.env.NODE_ENV === 'development';
 
-// Winston transports for production
 const transports: winston.transport[] = [
   new DailyRotateFile({
     filename: path.join(logDir, 'app-%DATE%.log'),
     datePattern: 'YYYY-MM-DD',
     zippedArchive: true,
     maxSize: '20m',
-    maxFiles: '14d', // Keep logs for 14 days
+    maxFiles: '14d',
     level: 'info',
   }),
   new DailyRotateFile({
@@ -28,7 +25,7 @@ const transports: winston.transport[] = [
     datePattern: 'YYYY-MM-DD',
     zippedArchive: true,
     maxSize: '20m',
-    maxFiles: '30d', // Keep error logs for 30 days
+    maxFiles: '30d',
     level: 'error',
   }),
 ];
@@ -52,17 +49,37 @@ const winstonLogger = winston.createLogger({
 
 export const logger = {
   info: (msg: string) => {
-    isDev ? console.log(`${chalk.blue('[INFO]')} ${msg}`) : winstonLogger.info(msg);
+    if (isDev) {
+      console.log(`${chalk.blue('[INFO]')} ${msg}`);
+    } else {
+      winstonLogger.info(msg);
+    }
   },
+
   success: (msg: string) => {
-    isDev ? console.log(`${chalk.green('[SUCCESS]')} ${msg}`) : winstonLogger.info(msg);
+    if (isDev) {
+      console.log(`${chalk.green('[SUCCESS]')} ${msg}`);
+    } else {
+      winstonLogger.info(msg);
+    }
   },
+
   warn: (msg: string) => {
-    isDev ? console.log(`${chalk.yellow('[WARN]')} ${msg}`) : winstonLogger.warn(msg);
+    if (isDev) {
+      console.log(`${chalk.yellow('[WARN]')} ${msg}`);
+    } else {
+      winstonLogger.warn(msg);
+    }
   },
+
   error: (msg: string) => {
-    isDev ? console.log(`${chalk.red('[ERROR]')} ${msg}`) : winstonLogger.error(msg);
+    if (isDev) {
+      console.log(`${chalk.red('[ERROR]')} ${msg}`);
+    } else {
+      winstonLogger.error(msg);
+    }
   },
+
   route: (method: string, url: string, status: number, time: number) => {
     const statusColor =
       status >= 500
@@ -75,10 +92,14 @@ export const logger = {
 
     const message = `${method} ${url} → ${status} (${time.toFixed(2)} ms)`;
 
-    isDev
-      ? console.log(
-          `${chalk.gray(`[${new Date().toISOString()}]`)} ${chalk.magenta(method)} ${chalk.white(url)} → ${statusColor(status)} (${time.toFixed(2)} ms)`,
-        )
-      : winstonLogger.info(message);
+    if (isDev) {
+      console.log(
+        `${chalk.gray(`[${new Date().toISOString()}]`)} ${chalk.magenta(
+          method,
+        )} ${chalk.white(url)} → ${statusColor(status)} (${time.toFixed(2)} ms)`,
+      );
+    } else {
+      winstonLogger.info(message);
+    }
   },
 };
