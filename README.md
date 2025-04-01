@@ -3,7 +3,7 @@
 Project to create and maintain a typecript/javascript backend api project template
 
 ![CI](https://github.com/ppires2000/typescript-javascript-api-project-template/actions/workflows/ci.yml/badge.svg)
-![License](https://img.shields.io/github/license/ppires2000/typescript-javascript-api-project-template)
+![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Node](https://img.shields.io/badge/node-20.x-brightgreen)
 ![TypeScript](https://img.shields.io/badge/typed_with-TypeScript-blue.svg)
 ![Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)
