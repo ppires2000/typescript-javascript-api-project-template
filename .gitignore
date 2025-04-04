@@ -38,3 +38,6 @@ coverage/
 # Next.js (in case of frontend integration later)
 .next/
 logs/
+
+# PostgreSQL local data volume
+/database/data
