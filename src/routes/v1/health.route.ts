@@ -1,17 +1,19 @@
-// src/routes/health.route.ts
-import { Router } from 'express';
+import express from 'express';
+import { sequelize } from '../../database/config/database';
 
-const router = Router();
+const router = express.Router();
 
 /**
- * @swagger
+ * @openapi
  * /api/v1/health:
  *   get:
- *     summary: Health check
- *     tags: [Health]
+ *     summary: Check API and database health status
+ *     description: Returns the API uptime and database connection status.
+ *     tags:
+ *       - Health
  *     responses:
  *       200:
- *         description: Service is up and running
+ *         description: API is running and database is connected
  *         content:
  *           application/json:
  *             schema:
@@ -19,17 +21,46 @@ const router = Router();
  *               properties:
  *                 status:
  *                   type: string
+ *                   example: ok
  *                 uptime:
  *                   type: number
- *                 timestamp:
- *                   type: number
+ *                   example: 123.45
+ *                 database:
+ *                   type: string
+ *                   example: connected
+ *       500:
+ *         description: Database connection failed
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: error
+ *                 database:
+ *                   type: string
+ *                   example: disconnected
+ *                 error:
+ *                   type: string
+ *                   example: Unable to connect to the database.
  */
-router.get('/', (_req, res) => {
-  res.status(200).json({
-    status: 'ok',
-    uptime: process.uptime(),
-    timestamp: Date.now(),
-  });
+
+router.get('/', async (_req, res) => {
+  try {
+    await sequelize.authenticate();
+    res.status(200).json({
+      status: 'ok',
+      uptime: process.uptime(),
+      database: 'connected',
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      database: 'disconnected',
+      error: (error as Error).message,
+    });
+  }
 });
 
 export default router;
