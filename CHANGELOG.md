@@ -1,24 +1,36 @@
-## [1.0.2] - 2025-04-18
-- Tests updated and no real DB connection needed
-
-## [1.0.1] - 2025-04-18
-- 🐛 Fix health route to include timestamp for monitoring tools
-
 # Changelog
 
 All notable changes to this project will be documented in this file.
 
-## [1.0.1] - 2025-04-18
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+---
+
+## [1.0.3] - 2025-04-18
 
 ### Added
 
-- `release.sh` automation script to tag and publish releases
-- GitHub Actions workflow to publish GitHub Releases automatically from `CHANGELOG.md`
+- Automated changelog parsing for GitHub Releases
+- Interactive version bump and release flow via `release.sh`
 
-## [1.0.0] - 2025-04-17
+### Fixed
+
+- Resolved test failures for healthcheck endpoint
+
+---
+
+## [1.0.2] - 2025-04-18
 
 ### Added
 
-- Initial project structure with TypeScript, Express, Docker, Sequelize
-- CI with ESLint, Jest
-- Swagger API documentation
+- Mocked Sequelize connection in healthcheck test
+- New `release.sh` with tagging, changelog, and versioning logic
+
+---
+
+## [1.0.0] - 2025-04-18
+
+### Added
+
+- Initial project setup with Express, TypeScript, Sequelize, Jest, ESLint, Prettier, Swagger

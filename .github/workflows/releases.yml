@@ -17,19 +17,17 @@ jobs:
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v3
 
-      - name: 📄 Read changelog
-        id: changelog
+      - name: 📝 Extract latest changelog entry
         run: |
-          VERSION="${GITHUB_REF#refs/tags/}"
-          RELEASE_NOTES=$(awk "/## \[$VERSION\]/,/^## /" CHANGELOG.md | sed '$d')
-          echo "RELEASE_NOTES<<EOF" >> $GITHUB_OUTPUT
-          echo "$RELEASE_NOTES" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
+          awk '/^## \[/ {if (found) exit} found; /^## \[/' CHANGELOG.md | tee /dev/stderr >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
 
-      - name: 🪄 Create GitHub Release
+      - name: 📦 Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
+          tag_name: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
-          body: ${{ steps.changelog.outputs.RELEASE_NOTES }}
+          body: ${{ env.RELEASE_NOTES }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
