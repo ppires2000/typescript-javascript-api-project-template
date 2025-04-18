@@ -1,0 +1,32 @@
+name: 📦 Create GitHub Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  release:
+    name: 🚀 Create Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v3
+
+      - name: 📄 Read changelog
+        id: changelog
+        run: |
+          VERSION="${GITHUB_REF#refs/tags/}"
+          RELEASE_NOTES=$(awk "/## \[$VERSION\]/,/^## /" CHANGELOG.md | sed '$d')
+          echo "RELEASE_NOTES<<EOF" >> $GITHUB_OUTPUT
+          echo "$RELEASE_NOTES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: 🪄 Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Release ${{ github.ref_name }}
+          body: ${{ steps.changelog.outputs.RELEASE_NOTES }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
