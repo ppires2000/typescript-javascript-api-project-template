@@ -17,10 +17,12 @@ jobs:
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v3
 
-      - name: 📝 Extract latest changelog entry
+      - name: Extract release notes for current version
+        id: changelog
         run: |
+          VERSION="${GITHUB_REF#refs/tags/}"
           echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
-          awk '/^## \[/ {if (found) exit} found; /^## \[/' CHANGELOG.md | tee /dev/stderr >> $GITHUB_ENV
+          awk "/^## \\[$VERSION\\]/ {flag=1; next} /^## \\[/ {flag=0} flag" CHANGELOG.md >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
       - name: 📦 Create GitHub Release
