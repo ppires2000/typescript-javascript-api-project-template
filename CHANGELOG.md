@@ -1,3 +1,6 @@
+## [1.0.2] - 2025-04-18
+- Tests updated and no real DB connection needed
+
 ## [1.0.1] - 2025-04-18
 - 🐛 Fix health route to include timestamp for monitoring tools
 
