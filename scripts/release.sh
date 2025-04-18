@@ -71,7 +71,7 @@ echo "📝 Write a short changelog description for this release:"
 read -r changelog
 
 DATE=$(date +%F)
-echo -e "## [$VERSION] - $DATE\n- $changelog\n\n$(cat CHANGELOG.md 2>/dev/null)" > CHANGELOG.md
+echo -e "## [$VERSION] - $DATE\n\n### Changed\n- $changelog\n\n$(cat CHANGELOG.md 2>/dev/null)" > CHANGELOG.md
 git add CHANGELOG.md
 
 # ─────────────────────────────────────────────────────────────
