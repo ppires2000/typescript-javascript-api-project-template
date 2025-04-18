@@ -1,6 +1,12 @@
 import request from 'supertest';
 import app from '../src/app';
 
+jest.mock('../src/database/config/database', () => ({
+  sequelize: {
+    authenticate: jest.fn().mockResolvedValue(undefined),
+  },
+}));
+
 describe('GET /api/v1/health', () => {
   it('should return 200 with health status info', async () => {
     const res = await request(app).get('/api/v1/health');

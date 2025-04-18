@@ -28,6 +28,9 @@ const router = express.Router();
  *                 database:
  *                   type: string
  *                   example: connected
+ *                 timestamp:
+ *                   type: number
+ *                   example: 1682219912345
  *       500:
  *         description: Database connection failed
  *         content:
@@ -53,6 +56,7 @@ router.get('/', async (_req, res) => {
       status: 'ok',
       uptime: process.uptime(),
       database: 'connected',
+      timestamp: Date.now(),
     });
   } catch (error) {
     res.status(500).json({
