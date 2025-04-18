@@ -38,12 +38,26 @@ const winstonLogger = winston.createLogger({
       ({ timestamp, level, message }) => `[${timestamp}] ${level.toUpperCase()}: ${message}`,
     ),
   ),
-  transports: isDev ? [new winston.transports.Console()] : transports,
+  transports: isDev
+    ? [new winston.transports.Console(), ...transports] // ✅ console + file logs
+    : transports,
   exceptionHandlers: [
-    new winston.transports.File({ filename: path.join(logDir, 'exceptions.log') }),
+    new DailyRotateFile({
+      filename: path.join(logDir, 'exceptions-%DATE%.log'),
+      datePattern: 'YYYY-MM-DD',
+      zippedArchive: true,
+      maxSize: '20m',
+      maxFiles: '30d',
+    }),
   ],
   rejectionHandlers: [
-    new winston.transports.File({ filename: path.join(logDir, 'rejections.log') }),
+    new DailyRotateFile({
+      filename: path.join(logDir, 'rejections-%DATE%.log'),
+      datePattern: 'YYYY-MM-DD',
+      zippedArchive: true,
+      maxSize: '20m',
+      maxFiles: '30d',
+    }),
   ],
 });
 
@@ -75,9 +89,8 @@ export const logger = {
   error: (msg: string) => {
     if (isDev) {
       console.log(`${chalk.red('[ERROR]')} ${msg}`);
-    } else {
-      winstonLogger.error(msg);
     }
+    winstonLogger.error(msg); // ✅ Always log to file
   },
 
   route: (method: string, url: string, status: number, time: number) => {
