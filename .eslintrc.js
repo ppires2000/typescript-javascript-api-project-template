@@ -1,5 +1,3 @@
-// .eslintrc.js
-
 module.exports = {
   env: {
     node: true,
@@ -11,6 +9,8 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
+    project: './tsconfig.eslint.json',
+    tsconfigRootDir: __dirname,
   },
   plugins: ['@typescript-eslint', 'prettier'],
   extends: [
