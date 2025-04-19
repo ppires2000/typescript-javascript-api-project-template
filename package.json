@@ -1,6 +1,6 @@
 {
   "name": "typescript-javascript-api-project-template",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Project to create and maintain a typescript/javascript backend api project template",
   "main": "index.js",
   "lint-staged": {

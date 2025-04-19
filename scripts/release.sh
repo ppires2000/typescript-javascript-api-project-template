@@ -80,3 +80,12 @@ git push origin "$CURRENT_BRANCH"
 git push origin "v$VERSION"
 
 echo "✅ Release v$VERSION completed and pushed!"
+
+echo ""
+echo "📌 REMINDER: After merging the release PR into master, run:"
+echo "   git checkout development"
+echo "   git fetch origin"
+echo "   git merge origin/master"
+echo "   git push origin development"
+echo ""
+echo "📄 Tip: See RELEASING.md for the full release and sync procedure."
