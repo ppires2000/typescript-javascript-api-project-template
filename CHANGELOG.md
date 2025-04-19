@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.8] - 2025-04-18
+
+### Added
+
+- `RELEASING.md` file with the official step-by-step release and sync procedure
+
+### Changed
+
+- `release.sh` updated to include a reminder for syncing `development` with `master` after the PR merge
+
+---
+
 ## [1.0.7] - 2025-04-18
 
 ### Docs
