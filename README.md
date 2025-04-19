@@ -1,112 +1,64 @@
-# TypeScript / JavaScript API Project Template
+# TypeScript/JavaScript API Project Template
 
-![CI](https://github.com/ppires2000/typescript-javascript-api-project-template/actions/workflows/ci.yml/badge.svg)
-![Codecov](https://codecov.io/gh/ppires2000/typescript-javascript-api-project-template/branch/development/graph/badge.svg)
-![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
-![Node](https://img.shields.io/badge/node-20.x-brightgreen)
-![TypeScript](https://img.shields.io/badge/typed_with-TypeScript-blue.svg)
-![Prettier](https://img.shields.io/badge/code_style-Prettier-blueviolet.svg)
-
-> 🚀 A clean, scalable, and production-ready TypeScript/JavaScript backend API template using Express.js, Sequelize, PostgreSQL, and Docker.  
-> Built with best practices in mind: CI/CD, Swagger, ESLint, testing, and more.
-
----
+A modern template for building robust, scalable backend APIs using TypeScript or JavaScript. Includes everything needed to start building an Express API using best practices.
 
 ## ✨ Features
 
-- ✅ Express.js API structure (versioned routing)
-- 🐘 PostgreSQL database (via Docker Compose)
-- 🧱 Sequelize ORM (typed, migration-ready)
-- ⚙️ Environment variable support (`.env`)
-- 💅 Prettier + ESLint + Husky + lint-staged
-- 🧪 Jest + Supertest + Code Coverage
-- 🧾 Swagger/OpenAPI auto-generated docs
-- 🔒 Secure defaults (Helmet, CORS, logging)
-- 🚀 GitHub Actions CI with Codecov badge
-- 📁 Project structure designed for scale
-
----
-
-## 📂 Project Structure
-
-```
-.
-├── src/
-│   ├── app.ts               # Express app setup
-│   ├── server.ts            # App entry point
-│   ├── routes/              # Versioned API routes
-│   ├── controllers/         # Business logic (to be added)
-│   ├── database/            # Sequelize config & models
-│   ├── utils/               # Logger, middleware, etc.
-│   └── docs/swagger.ts      # Swagger config
-├── database/data/           # PostgreSQL volume (gitignored)
-├── .github/workflows/ci.yml# GitHub Actions config
-├── docker-compose.yml       # PostgreSQL container
-└── .env / .env.example      # Environment variables
-```
-
----
+- 📦 Express.js API with TypeScript or JavaScript
+- 🧪 Jest testing setup (unit + integration)
+- 🛠 ESLint + Prettier for code quality
+- 🧩 Automated release workflow (`release.sh` + GitHub Actions)
+- 🗒️ CHANGELOG.md-based release notes for GitHub Releases
+- 🧵 Project structure following best practices
+- 📦 Sequelize ORM + PostgreSQL
+- 🐳 Docker & Docker Compose
+- 📄 Swagger/OpenAPI documentation
+- 🔒 Security middlewares (helmet, cors, etc.)
+- 🧰 Built-in logging system using Winston
 
 ## 🛠️ Getting Started
 
-```bash
-git clone https://github.com/ppires2000/typescript-javascript-api-project-template.git
-cd typescript-javascript-api-project-template
-cp .env.example .env
-docker compose up -d       # Start PostgreSQL
-npm install
-npm run dev                # Start API in dev mode
-```
+1. Clone the repository
+2. Run `npm install`
+3. Copy `.env.example` to `.env` and adjust config
+4. Run the dev server:
+   ```bash
+   npm run dev
+   ```
 
----
-
-## 🧪 Testing & Coverage
+### Optional: release automation setup
 
 ```bash
-npm run test              # Run tests
-npm run test:coverage     # Run with coverage
+npm run build             # Ensure build passes
+./scripts/release.sh      # Interactive version tagging & GitHub Release
 ```
-
-See coverage report in `/coverage/lcov-report/index.html`
-
----
 
 ## 📚 Swagger API Docs
 
-Once the server is running, open:  
-`http://localhost:3000/api/docs`
-
----
-
-## 🐳 Docker
-
-Spin up the PostgreSQL database via Docker Compose:
-
-```bash
-docker compose up -d
-```
-
-PostgreSQL will persist data in `./database/data` (gitignored)
-
----
-
-## ✅ GitHub Topics / Tags
-
-To add under repository settings:
+Once the server is running, open your browser at:
 
 ```
-typescript, javascript, express, api, sequelize, postgres, docker, eslint, prettier, jest, swagger, template
+http://localhost:3000/api-docs
 ```
 
----
+## 🚀 Release Flow
 
-## 📜 License
+This project uses an automated release process:
 
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+1. Run `./scripts/release.sh` to bump the version, update `CHANGELOG.md`, and create a Git tag.
+2. GitHub Actions triggers on tag push and creates a GitHub Release.
+3. The release notes are pulled from the latest entry in `CHANGELOG.md`.
 
----
+> See [`scripts/release.sh`](scripts/release.sh) and [`scripts/README.md`](scripts/README.md) for full details.
 
-## 💬 Feedback & Contributions
+## 🧰 Internal Tooling
 
-Open an issue or submit a PR — contributions are always welcome!  
-See [`CONTRIBUTING.md`](CONTRIBUTING.md) for guidelines.
+The `scripts/` folder contains internal developer tooling, such as:
+
+- `release.sh`: assists with versioning, changelog updates, tagging, and publishing releases
+
+More details in [`scripts/README.md`](scripts/README.md)
+
+## License
+
+MIT – © 2025
