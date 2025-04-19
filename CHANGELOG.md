@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.9] - 2025-04-18
+
+### Added
+
+- New script: `sync-development.sh` to safely sync `development` with `master` after a release
+- `RELEASING.md` now included as the official release procedure checklist
+
+### Changed
+
+- `release.sh` updated to remind maintainers to use the sync script instead of printing full git steps
+- `RELEASING.md` updated to reflect this change and simplify post-release steps
+
+---
+
 ## [1.0.8] - 2025-04-18
 
 ### Added

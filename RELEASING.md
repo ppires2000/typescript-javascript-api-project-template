@@ -1,4 +1,4 @@
-# 📦 RELEASING.md
+# 🎟️ RELEASING.md
 
 This document outlines the official step-by-step process for preparing and releasing a new version of this project.
 
@@ -22,12 +22,14 @@ The project uses:
 Add a new section at the top:
 
 ```markdown
-## [1.0.8] - YYYY-MM-DD
+## [1.0.9] - YYYY-MM-DD
 
 ### Added
+
 - ...
 
 ### Fixed
+
 - ...
 ```
 
@@ -35,11 +37,11 @@ Use the correct version number and current date.
 
 ---
 
-### 2. 💾 Stage, commit, and push your changes
+### 2. 📂 Stage, commit, and push your changes
 
 ```bash
-git add CHANGELOG.md README.md scripts/README.md
-git commit -m "📚 docs: prepare release 1.0.8"
+git add CHANGELOG.md README.md scripts/README.md release.sh
+git commit -m "📆 release: prepare v1.0.9"
 git push origin development
 ```
 
@@ -63,50 +65,33 @@ git push origin development
 ### 4. ✅ Verify the GitHub Release
 
 Visit:  
-📎 `https://github.com/<your-repo>/releases`  
+💎 `https://github.com/<your-repo>/releases`  
 Ensure that:
-- The version appears (e.g. `v1.0.8`)
+
+- The version appears (e.g. `v1.0.9`)
 - The notes match the new changelog section
 
 ---
 
-### 5. 🔁 Create a Pull Request (PR)
+### 5. ↺ Create a Pull Request (PR)
 
 Merge `development` → `master`
 
-- Title: `Release v1.0.8`
+- Title: `Release v1.0.9`
 - Description: Copy the changelog section
 - Review and merge the PR
 
 ---
 
-### 6. 🔄 Sync development with master
+### 6. 🗒 Sync development with master
 
-After the PR is merged:
+After the PR is merged, run the sync helper script:
 
 ```bash
-git checkout development
-git fetch origin
-git merge origin/master
-git push origin development
+./scripts/sync-development.sh
 ```
 
 This ensures `development` includes the final release commit made by GitHub when merging the PR.
-
----
-
-### 💡 Optional: If things fall out of sync
-
-If development is behind and you want to match master exactly:
-
-```bash
-git checkout development
-git fetch origin
-git reset --hard origin/master
-git push origin development --force
-```
-
-Use with caution!
 
 ---
 
@@ -115,4 +100,3 @@ Use with caution!
 - Do not commit directly to `master`
 - Do not create GitHub Releases manually — they're generated automatically
 - Only run `release.sh` from `development` or a working branch, **never `main` or `master`**
-
