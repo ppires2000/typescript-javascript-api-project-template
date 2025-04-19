@@ -67,11 +67,7 @@ git add package.json package-lock.json
 # ─────────────────────────────────────────────────────────────
 # 🗒️ Step 6: Prompt for changelog entry
 # ─────────────────────────────────────────────────────────────
-echo "📝 Write a short changelog description for this release:"
-read -r changelog
-
-DATE=$(date +%F)
-echo -e "## [$VERSION] - $DATE\n\n### Changed\n- $changelog\n\n$(cat CHANGELOG.md 2>/dev/null)" > CHANGELOG.md
+# 🗒️ Step 6: Stage updated CHANGELOG.md (manually edited before running this script)
 git add CHANGELOG.md
 
 # ─────────────────────────────────────────────────────────────
