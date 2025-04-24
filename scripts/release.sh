@@ -56,6 +56,13 @@ echo "📦 New version: $VERSION"
 echo "🧪 Running prechecks..."
 npm run lint
 npm test
+
+# If tests fail, exit here
+if [[ $? -ne 0 ]]; then
+  echo "❌ Tests failed. Aborting release."
+  exit 1
+fi
+
 npm run build
 
 # ─────────────────────────────────────────────────────────────
@@ -64,8 +71,6 @@ npm run build
 npm version "$VERSION" --no-git-tag-version
 git add package.json package-lock.json
 
-# ─────────────────────────────────────────────────────────────
-# 🗒️ Step 6: Prompt for changelog entry
 # ─────────────────────────────────────────────────────────────
 # 🗒️ Step 6: Stage updated CHANGELOG.md (manually edited before running this script)
 git add CHANGELOG.md
