@@ -13,16 +13,57 @@ jobs:
     name: 🚀 Create Release
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:15
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: devuser
+          POSTGRES_PASSWORD: devpass
+          POSTGRES_DB: devdb
+        options: >-
+          --health-cmd="pg_isready"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
     steps:
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v3
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: ⏳ Wait for Postgres to be ready
+        run: |
+          until pg_isready -h localhost -p 5432; do sleep 1; done
+
+      - name: 🧪 Run Lint, Test, and Build
+        run: |
+          npm run lint
+          npm test
+          npm run build
+        env:
+          POSTGRES_HOST: localhost
+          POSTGRES_USER: devuser
+          POSTGRES_PASSWORD: devpass
+          POSTGRES_DB: devdb
+          POSTGRES_PORT: 5432
+          NODE_ENV: test
+          JWT_SECRET: dummy_token_for_ci
 
       - name: 🔍 Extract release notes from CHANGELOG.md
         id: extract_notes
         run: |
           VERSION="${GITHUB_REF#refs/tags/}"
           echo "Extracting notes for version $VERSION"
-          NOTES=$(awk "/^## \\[$VERSION\\]/ {flag=1; next} /^## \\[/ {flag=0} flag" CHANGELOG.md | sed '/^\s*$/d')
+          NOTES=$(awk "/^## \[$VERSION\]/ {flag=1; next} /^## \[/ {flag=0} flag" CHANGELOG.md | sed '/^\s*$/d')
           echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
           echo "$NOTES" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
