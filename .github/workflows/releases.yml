@@ -29,9 +29,7 @@ jobs:
       - name: 📦 Install dependencies
         run: npm ci
 
-      # Removed database, test steps, and wait logic completely
-
-      - name: 🧪 Run Lint and Build
+      - name: 🧪 Run Lint and Build (no tests)
         run: |
           npm run lint
           npm run build
