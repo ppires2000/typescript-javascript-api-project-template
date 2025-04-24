@@ -2,7 +2,11 @@ name: CI
 
 on:
   push:
-    branches: [main, development]
+    branches:
+      - main
+      - development
+    tags:
+      - 'v*.*.*' # This will ensure CI doesn't run tests for tagged releases, but still does for code pushes
 
 jobs:
   build-and-test:
@@ -25,7 +29,9 @@ jobs:
       - name: 🧼 Lint code
         run: npm run lint
 
+      # Skip running tests when the workflow is triggered by tags (release push)
       - name: 🧪 Run tests
+        if: ${{ github.event_name != 'push' || github.ref != 'refs/tags/v*.*.*' }}
         run: npm test
 
       - name: 🛠️ Build project
