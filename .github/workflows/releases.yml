@@ -13,27 +13,7 @@ jobs:
     name: 🚀 Create Release
     runs-on: ubuntu-latest
 
-    services:
-      db:
-        image: postgres:16
-        ports:
-          - 5432:5432
-        env:
-          POSTGRES_USER: devuser
-          POSTGRES_PASSWORD: devpass
-          POSTGRES_DB: devdb
-        options: >-
-          --health-cmd="pg_isready"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=5
-
     env:
-      POSTGRES_HOST: db
-      POSTGRES_PORT: 5432
-      POSTGRES_USER: devuser
-      POSTGRES_PASSWORD: devpass
-      POSTGRES_DB: devdb
       NODE_ENV: test
       JWT_SECRET: dummy_token_for_ci
 
@@ -49,8 +29,10 @@ jobs:
       - name: 📦 Install dependencies
         run: npm ci
 
-      # Removed the test step to skip tests in CI
-      # - name: 🧪 Run Tests
+      # Removed database and test execution entirely from the CI pipeline.
+      # No need for the `pg_isready` check or database service setup.
+
+      # - name: 🧪 Run Tests (No longer needed)
       #   run: npm test
 
       - name: 🧪 Run Lint and Build
