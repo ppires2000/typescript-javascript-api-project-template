@@ -34,4 +34,20 @@ A utility script to automate:
   chmod +x scripts/release.sh
   ```
 
+### 🧹 reset-db.sh
+
+A simple helper to fully reset the database — used to wipe out all existing tables and re-seed clean test data:
+
+```bash
+./scripts/reset-db.sh
+```
+
+This script performs the following steps:
+
+1. Rolls back all Sequelize migrations
+2. Re-applies all migrations
+3. Runs all seeders
+
+Useful when changes to models, password logic, or schema make previous data invalid or outdated.
+
 - Releases are only allowed from non-`main`/`master` branches for safety.
