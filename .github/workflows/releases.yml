@@ -29,11 +29,7 @@ jobs:
       - name: 📦 Install dependencies
         run: npm ci
 
-      # Removed database and test execution entirely from the CI pipeline.
-      # No need for the `pg_isready` check or database service setup.
-
-      # - name: 🧪 Run Tests (No longer needed)
-      #   run: npm test
+      # Removed database, test steps, and wait logic completely
 
       - name: 🧪 Run Lint and Build
         run: |
