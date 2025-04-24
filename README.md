@@ -33,6 +33,20 @@ npm run build             # Ensure build passes
 ./scripts/release.sh      # Interactive version tagging & GitHub Release
 ```
 
+## 🔧 Database Setup
+
+This project uses PostgreSQL and relies on UUIDs for primary keys. You must enable the `uuid-ossp` extension in your PostgreSQL database before running migrations.
+
+If you're running Postgres in Docker, run this inside the container:
+
+```bash
+docker exec -it <your-postgres-container-name> \
+  psql -U <your-username> -d <your-database> \
+  -c 'CREATE EXTENSION IF NOT EXISTS "uuid-ossp";'
+```
+
+> Note: This step is automated in Sequelize migrations as well, but it's helpful to ensure it's enabled upfront if testing DB interactions directly.
+
 ## 📚 Swagger API Docs
 
 Once the server is running, open your browser at:

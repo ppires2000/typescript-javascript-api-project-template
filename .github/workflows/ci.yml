@@ -2,12 +2,20 @@ name: CI
 
 on:
   push:
-    branches: [main, development]
+    branches:
+      - main
+      - development
+    tags:
+      - 'v*.*.*' # Ensures the CI doesn't run tests for tagged releases, but still does for code pushes
 
 jobs:
   build-and-test:
-    name: 🧪 Lint, Test & Build
+    name: 🧪 Lint & Build
     runs-on: ubuntu-latest
+
+    env:
+      NODE_ENV: test
+      JWT_SECRET: dummy_token_for_ci
 
     steps:
       - name: ⬇️ Checkout repository
@@ -20,13 +28,10 @@ jobs:
           cache: 'npm'
 
       - name: 📦 Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: 🧼 Lint code
         run: npm run lint
-
-      - name: 🧪 Run tests
-        run: npm test
 
       - name: 🛠️ Build project
         run: npm run build

@@ -1,0 +1,163 @@
+openapi: 3.0.0
+info:
+  title: User API
+  version: 1.0.0
+  description: API for managing users
+
+paths:
+  /api/v1/users:
+    get:
+      summary: Get all users
+      tags:
+        - Users
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      summary: Create a new user
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad request
+        '409':
+          description: Email already exists
+
+  /api/v1/users/{id}:
+    get:
+      summary: Get user by ID
+      tags:
+        - Users
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: UUID of the user
+      responses:
+        '200':
+          description: A user object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+
+    patch:
+      summary: Update a user by ID
+      tags:
+        - Users
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: UUID of the user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdateInput'
+      responses:
+        '200':
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid input
+        '404':
+          description: User not found
+
+    delete:
+      summary: Delete a user by ID
+      tags:
+        - Users
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: UUID of the user
+      responses:
+        '204':
+          description: User deleted successfully
+        '404':
+          description: User not found
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        fname:
+          type: string
+        lname:
+          type: string
+        email:
+          type: string
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    UserInput:
+      type: object
+      required:
+        - fname
+        - lname
+        - email
+        - password
+      properties:
+        fname:
+          type: string
+        lname:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+
+    UserUpdateInput:
+      type: object
+      properties:
+        fname:
+          type: string
+        lname:
+          type: string
+        email:
+          type: string

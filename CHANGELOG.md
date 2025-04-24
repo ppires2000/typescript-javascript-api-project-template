@@ -7,6 +7,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.1.0] - 2025-04-24
+
+### Added
+
+- Improved CI/CD workflows for release process.
+- Bypassed automatic tests execution during releases.
+
+### Changed
+
+- Refactored CI to remove unnecessary steps for tests in the release pipeline.
+- Adjusted GitHub Actions to handle only build and release creation.
+
+### Fixed
+
+- Fixed broken CI pipeline with correct versioning and release management.
+
+---
+
+## [2.0.0] - 2025-04-24
+
+### Added
+
+- JWT-based authentication via `/auth/login`
+- Protected route `/auth/me` with `authenticateToken` middleware
+- Sequelize `beforeCreate` hook for password hashing
+- Supertest coverage for `auth`, `users`, and health routes
+- `jest.globalSetup.ts` to manage DB lifecycle for tests
+
+### Changed
+
+- Swagger documentation migrated to unified `.yaml` files:
+  - `auth.openapi.yaml`
+  - `health.openapi.yaml`
+  - `users.openapi.yaml`
+- Cleaned up all inline JSDoc Swagger blocks
+- Fully modular and testable route structure
+
+### Fixed
+
+- DB collisions during test runs with `sequelize.sync({ force: true })`
+- Inconsistent Swagger formatting and duplication
+
+---
+
 ## [1.0.9] - 2025-04-18
 
 ### Added

@@ -3,12 +3,13 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import dotenv from 'dotenv';
+import dotenvFlow from 'dotenv-flow';
 import v1Routes from './routes/v1';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './docs/swagger';
+import { errorHandler } from './middlewares/errorHandler';
 
-dotenv.config();
+dotenvFlow.config();
 
 const app = express();
 
@@ -40,10 +41,21 @@ app.get('/', (_req, res) => {
   res.json({ message: 'API is running.' });
 });
 
+app.get('/error', (_req, _res, next) => {
+  try {
+    throw new Error('Test error');
+  } catch (err) {
+    next(err);
+  }
+});
+
 // Versioned API routes
 app.use('/api/v1', v1Routes);
 
 // Serve Swagger docs
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// Always after all routes
+app.use(errorHandler);
 
 export default app;
