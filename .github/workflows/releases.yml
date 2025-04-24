@@ -51,12 +51,12 @@ jobs:
 
       - name: ⏳ Wait for PostgreSQL (manual check)
         run: |
-          for i in {1..10}; do
+          for i in {1..30}; do
             pg_isready -h db -p 5432 && echo "✅ DB is ready" && exit 0
             echo "Waiting for db... ($i)"
-            sleep 2
+            sleep 5
           done
-          echo "❌ PostgreSQL not ready after 20s." && exit 1
+          echo "❌ PostgreSQL not ready after 150s." && exit 1
 
       - name: 🧪 Run Lint, Test, and Build
         run: |
@@ -69,7 +69,7 @@ jobs:
         run: |
           VERSION="${GITHUB_REF#refs/tags/}"
           echo "Extracting notes for version $VERSION"
-          NOTES=$(awk "/^## \[$VERSION\]/ {flag=1; next} /^## \[/ {flag=0} flag" CHANGELOG.md | sed '/^\s*$/d')
+          NOTES=$(awk "/^## \\[$VERSION\\]/ {flag=1; next} /^## \\[/ {flag=0} flag" CHANGELOG.md | sed '/^\\s*$/d')
           echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
           echo "$NOTES" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
