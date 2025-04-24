@@ -1,8 +1,8 @@
 import request from 'supertest';
 import app from '../src/app';
 
-let seededUserEmail = 'authuser@example.com';
-let seededUserPassword = 'testpass123';
+const seededUserEmail = 'authuser@example.com';
+const seededUserPassword = 'testpass123';
 
 beforeAll(async () => {
   await request(app).post('/api/v1/users').send({

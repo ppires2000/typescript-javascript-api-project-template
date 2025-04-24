@@ -22,7 +22,8 @@ export const authenticateToken = (req: AuthenticatedRequest, res: Response, next
     };
     req.user = payload;
     next();
-  } catch (err) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (_err) {
     res.status(403).json({ message: 'Invalid or expired token' });
     return;
   }

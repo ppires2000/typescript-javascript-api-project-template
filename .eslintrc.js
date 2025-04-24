@@ -26,6 +26,13 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'warn',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-unused-expressions': 'error',
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+      }, // ✅ allow _next, _err, etc.
+    ],
 
     // Console logging – allowed in dev, warning in prod
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',

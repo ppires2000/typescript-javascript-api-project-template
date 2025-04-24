@@ -28,7 +28,7 @@ const swaggerSpec = swaggerJSDoc(swaggerOptions);
 const yamlFiles = ['auth.openapi.yaml', 'health.openapi.yaml', 'users.openapi.yaml'];
 yamlFiles.forEach(file => {
   const filePath = path.join(__dirname, file);
-  const doc = yaml.load(fs.readFileSync(filePath, 'utf8')) as Record<string, any>;
+  const doc = yaml.load(fs.readFileSync(filePath, 'utf8')) as Record<string, unknown>;
   _.merge(swaggerSpec, doc);
 });
 

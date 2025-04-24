@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 import { User } from '../database/models/user.model';
 import { catchAsync } from '../utils/catchAsync';
 
-export const login = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+export const login = catchAsync(async (req: Request, res: Response, _next: NextFunction) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ where: { email } });
