@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.1.0] - 2025-04-24
+
+### Added
+
+- Improved CI/CD workflows for release process.
+- Bypassed automatic tests execution during releases.
+
+### Changed
+
+- Refactored CI to remove unnecessary steps for tests in the release pipeline.
+- Adjusted GitHub Actions to handle only build and release creation.
+
+### Fixed
+
+- Fixed broken CI pipeline with correct versioning and release management.
+
+---
+
 ## [2.0.0] - 2025-04-24
 
 ### Added

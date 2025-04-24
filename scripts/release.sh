@@ -72,11 +72,20 @@ npm version "$VERSION" --no-git-tag-version
 git add package.json package-lock.json
 
 # ─────────────────────────────────────────────────────────────
-# 🗒️ Step 6: Stage updated CHANGELOG.md (manually edited before running this script)
+# 🗒️ Step 6: Extract Release Notes from CHANGELOG.md
+# ─────────────────────────────────────────────────────────────
+echo "📝 Extracting release notes from CHANGELOG.md..."
+RELEASE_NOTES=$(awk "/^## \\[$VERSION\\]/ {flag=1; next} /^## \\[/ {flag=0} flag" CHANGELOG.md | sed '/^\s*$/d')
+echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
+echo "$RELEASE_NOTES" >> $GITHUB_ENV
+echo "EOF" >> $GITHUB_ENV
+
+# ─────────────────────────────────────────────────────────────
+# 🗒️ Step 7: Stage updated CHANGELOG.md (manually edited before running this script)
 git add CHANGELOG.md
 
 # ─────────────────────────────────────────────────────────────
-# 🔖 Step 7: Commit, tag and push
+# 🔖 Step 8: Commit, tag and push
 # ─────────────────────────────────────────────────────────────
 git commit -m "🔖 Release v$VERSION"
 git tag "v$VERSION"
