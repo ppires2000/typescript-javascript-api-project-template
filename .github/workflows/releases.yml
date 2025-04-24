@@ -49,9 +49,14 @@ jobs:
       - name: 📦 Install dependencies
         run: npm ci
 
-      - name: ⏳ Wait for Postgres to be ready
+      - name: ⏳ Wait for PostgreSQL (manual check)
         run: |
-          until pg_isready -h db -p 5432; do echo "Waiting for db..."; sleep 2; done
+          for i in {1..10}; do
+            pg_isready -h db -p 5432 && echo "✅ DB is ready" && exit 0
+            echo "Waiting for db... ($i)"
+            sleep 2
+          done
+          echo "❌ PostgreSQL not ready after 20s." && exit 1
 
       - name: 🧪 Run Lint, Test, and Build
         run: |
