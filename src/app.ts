@@ -3,12 +3,12 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import dotenv from 'dotenv';
+import dotenvFlow from 'dotenv-flow';
 import v1Routes from './routes/v1';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './docs/swagger';
 
-dotenv.config();
+dotenvFlow.config();
 
 const app = express();
 
