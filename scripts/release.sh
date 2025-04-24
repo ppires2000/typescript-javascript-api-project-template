@@ -76,9 +76,7 @@ git add package.json package-lock.json
 # ─────────────────────────────────────────────────────────────
 echo "📝 Extracting release notes from CHANGELOG.md..."
 RELEASE_NOTES=$(awk "/^## \\[$VERSION\\]/ {flag=1; next} /^## \\[/ {flag=0} flag" CHANGELOG.md | sed '/^\s*$/d')
-echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
-echo "$RELEASE_NOTES" >> $GITHUB_ENV
-echo "EOF" >> $GITHUB_ENV
+echo "RELEASE_NOTES=$RELEASE_NOTES" >> $GITHUB_ENV
 
 # ─────────────────────────────────────────────────────────────
 # 🗒️ Step 7: Stage updated CHANGELOG.md (manually edited before running this script)
